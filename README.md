@@ -43,4 +43,4 @@
 * 카드를 오픈한다.
 
 ## 객체 구조 
-![Object-Diagram]("./object-diagram.png")
+![Object-Diagram](./object-diagram.png)
