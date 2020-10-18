@@ -52,8 +52,6 @@ public class CardDeckTest {
     void RemoveTest(){
         CardDeck cardDeck = new CardDeck();
         Card card = cardDeck.remove_card();
-        System.out.println(card.getPattern());
-        System.out.println(card.getCharacter());
         assertSame(cardDeck.getCards().contains(card),false);
 
     }
