@@ -7,26 +7,34 @@ import java.util.Random;
 public class CardDeck {
 
     List<Card> cards=new ArrayList<>();
-    int number_of_card; //카드 갯수
-    String[] pattern = {"SPADE","HEART","DIAMOND","CLUB"};
 
     public List<Card> getCards() {
         return cards;
     }
-    public int getNumber_of_card() {
-        return number_of_card;
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
-    public CardDeck(List<Card> cards,int number_of_card) {
-        this.cards = cards;
-        this.number_of_card=number_of_card;
+    private static String[] patterns={
+            CardShape.CLUB.name(),
+            CardShape.DIAMOND.name(),
+            CardShape.HEART.name(),
+            CardShape.SPADE.name()
+    };
+    public CardDeck() {
+       make_deck(patterns);
+    }
+
+    public void make_deck(String[] patterns){
+        for(int i=0;i<4;i++)
+            make_carddeck(patterns[i]);
     }
 
     //카드덱 만들기
-    public void make_carddeck(){
+    public void make_carddeck(String pattern){
         String character;
-        int count=0;
-        for(int j=0;j< pattern.length;j++) {
+
             for (int i = 0; i < 14; i++) {
                 if (i == 0)
                     character = "A";
@@ -38,25 +46,29 @@ public class CardDeck {
                     character = "K";
                 else
                     character = String.valueOf(i);
-                Card card = new Card(pattern[j],character);
-                count++;
-                cards.add(card);
+                Card card = new Card(CardShape.valueOf(pattern),character);
+                this.cards.add(card);
             }
+
         }
-        this.number_of_card=count;
+    public void addCard(Card card){
+        this.cards.add(card);
     }
 
     //카드덱에서 카드 한장 뽑기(인덱스 추출)
     public int draw_card_index(){
         Random random = new Random();
-        return random.nextInt(this.number_of_card);
+        return random.nextInt(cards.size());
+    }
+    //카드 뽑기
+    public Card pick(){
+        return cards.get(draw_card_index());
     }
 
-    //카드덱에서 한장뽑고 해당 인덱스에 있는 카드 삭제
-    public Card draw_card(int index){
-        Card draw_card = cards.get(index);
-        cards.remove(index);
-        this.number_of_card--;
-        return draw_card;
+    //카드덱에서 해당 인덱스에 있는 카드 삭제
+    public Card remove_card(){
+        Card pickcard = pick();
+        this.cards.remove(pickcard);
+        return pickcard;
     }
 }

@@ -19,8 +19,8 @@ public class CardDeckTest {
     @DisplayName("Carddeck")
     public void Carddeck(String pattern){
         String character;
+        CardDeck cardDeck = new CardDeck();
         List<Card> cards=new ArrayList<>();
-        int count=0;
             for (int i = 0; i < 14; i++) {
                 if (i == 0)
                     character = "A";
@@ -32,22 +32,29 @@ public class CardDeckTest {
                     character = "K";
                 else
                     character = String.valueOf(i);
-                Card card = new Card(pattern,character);
+                Card card = new Card(CardShape.valueOf(pattern),character);
                 cards.add(card);
-                count++;
+                cardDeck.addCard(card);
             }
-            CardDeck cardDeck = new CardDeck(cards,count);
-            for(int i=0;i<14;i++) {
-                System.out.print(cardDeck.getCards().get(i).getPattern());
-                System.out.print(" ");
-                System.out.print(cardDeck.getCards().get(i).getCharacter());
-                System.out.print(" ");
-            }
-        System.out.println();
-        System.out.println(cardDeck.getNumber_of_card());
     }
     @Test
-    void Test(){
+    @DisplayName("카드 뽑기")
+    void PickTest(){
+        CardDeck cardDeck = new CardDeck();
+        Card card = cardDeck.pick();
+        System.out.println(card.getPattern());
+        System.out.println(card.getCharacter());
+        assertSame(cardDeck.getCards().contains(card),true);
+    }
+
+    @Test
+    @DisplayName("카드 뽑은 후 삭제")
+    void RemoveTest(){
+        CardDeck cardDeck = new CardDeck();
+        Card card = cardDeck.remove_card();
+        System.out.println(card.getPattern());
+        System.out.println(card.getCharacter());
+        assertSame(cardDeck.getCards().contains(card),false);
 
     }
 }

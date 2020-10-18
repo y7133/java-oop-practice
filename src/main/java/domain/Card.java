@@ -1,15 +1,15 @@
 package domain;
 
 public class Card {
-    String pattern;
-    String character;
+    private CardShape pattern;
+    private String character;
 
-    public Card(String pattern, String character) {
+    public Card(CardShape pattern, String character) {
         this.pattern = pattern;
         this.character = character;
     }
 
-    public void setPattern(String pattern) {
+    public void setPattern(CardShape pattern) {
         this.pattern = pattern;
     }
 
@@ -17,7 +17,7 @@ public class Card {
         this.character = character;
     }
 
-    public String getPattern() {
+    public CardShape getPattern() {
         return pattern;
     }
 
