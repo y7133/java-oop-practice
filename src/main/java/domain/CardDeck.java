@@ -32,25 +32,24 @@ public class CardDeck {
     }
 
     //카드덱 만들기
-    public void make_carddeck(String pattern){
+    public void make_carddeck(String pattern) {
         String character;
-
-            for (int i = 0; i < 14; i++) {
-                if (i == 0)
-                    character = "A";
-                else if (i == 11)
-                    character = "J";
-                else if (i == 12)
-                    character = "Q";
-                else if (i == 13)
-                    character = "K";
-                else
-                    character = String.valueOf(i);
-                Card card = new Card(CardShape.valueOf(pattern),character);
-                this.cards.add(card);
-            }
-
+        for (int i = 1; i < 14; i++) {
+            if (i == 1)
+                character = "A";
+            else if (i == 11)
+                character = "J";
+            else if (i == 12)
+                character = "Q";
+            else if (i == 13)
+                character = "K";
+            else
+                character = String.valueOf(i);
+            Card card = new Card(CardShape.valueOf(pattern), character);
+            this.cards.add(card);
         }
+
+    }
     public void addCard(Card card){
         this.cards.add(card);
     }
@@ -61,13 +60,12 @@ public class CardDeck {
         return random.nextInt(cards.size());
     }
     //카드 뽑기
-    public Card pick(){
-        return cards.get(draw_card_index());
-    }
-
+//    public Card pick(){
+//        return cards.get(draw_card_index());
+//    }
     //카드덱에서 해당 인덱스에 있는 카드 삭제
-    public Card remove_card(){
-        Card pickcard = pick();
+    public Card pickAndRemove(){
+        Card pickcard = cards.get(draw_card_index());
         this.cards.remove(pickcard);
         return pickcard;
     }

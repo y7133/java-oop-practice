@@ -1,20 +1,61 @@
 package domain;
 
-public class Dealer {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-    //카드를 뽑으면 그 카드를 다시뽑지 않아야함
-    //카드는 랜덤으로 뽑히는 것
+public class Dealer implements Player{
 
-    void open_card(){
+    List<Card> dealer_cards= new ArrayList<>();
+    private static final int MAX_CARD=3;
+    public int dealerTotal=0;
+
+    public Dealer(List<Card> dealer_cards) {
+        this.dealer_cards=dealer_cards;
+        this.dealerTotal=0;
+    }
+    @Override
+    public List<Card> openCard(){
+        return dealer_cards;
+    }
+    @Override
+    public void firstPick(CardDeck cardDeck){
+        dealer_cards.add(cardDeck.pickAndRemove());
+        dealer_cards.add(cardDeck.pickAndRemove());
+        total(dealer_cards);
+    }
+
+    @Override
+    public void total(List<Card> cards){
+        cards=dealer_cards;
+        for(Card card:cards)
+            this.dealerTotal+=card.getPoint();
+    }
+    public void pick(CardDeck cardDeck){
+
+        if(this.dealerTotal<17&&!isOverCardSize()) {
+            dealer_cards.add(cardDeck.pickAndRemove());
+            this.dealerTotal+=dealer_cards.get(2).getPoint();
+        }
 
     }
-    void get_card(){
-        //카드 합계 점수가 16점이하면
-        //반드시 1장 추가로 뽑기 -> 카드 갯수 count?
-        //뽑은 카드 삭제
-
+    public boolean isOverCardSize(){
+        if(dealer_cards.size()>=MAX_CARD)
+            throw new IllegalArgumentException("받을 수 있는 카드 수 초과");
+        return false;
     }
 
-
-
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Dealer)) return false;
+//        Dealer dealer = (Dealer) o;
+//        return dealer_cards.equals(dealer.dealer_cards) &&
+//                rule.equals(dealer.rule);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(dealer_cards, rule);
+//    }
 }

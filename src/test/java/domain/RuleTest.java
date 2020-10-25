@@ -1,13 +1,16 @@
-import domain.*;
-import ui.Game;
+package domain;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJack {
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.play();
+public class RuleTest {
+
+    @Test
+    @DisplayName("게임 승리자")
+    public void winnerTest(){
         CardDeck cardDeck = new CardDeck();
         List<Card> dealerCardlist=new ArrayList<>();
         List<Card> gamerCardList = new ArrayList<>();
