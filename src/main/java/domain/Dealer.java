@@ -1,46 +1,53 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Dealer implements Player{
 
-    List<Card> dealer_cards= new ArrayList<>();
+    List<Card> dealerCards;
     private static final int MAX_CARD=3;
-    public int dealerTotal=0;
+    private static final int BOUNDARY_VALUE=17;
+    public int dealerTotal;
 
-    public Dealer(List<Card> dealer_cards) {
-        this.dealer_cards=dealer_cards;
+    public Dealer(List<Card> dealerCards) {
+        this.dealerCards = dealerCards;
         this.dealerTotal=0;
     }
     @Override
     public List<Card> openCard(){
-        return dealer_cards;
-    }
-    @Override
-    public void firstPick(CardDeck cardDeck){
-        dealer_cards.add(cardDeck.pickAndRemove());
-        dealer_cards.add(cardDeck.pickAndRemove());
-        total(dealer_cards);
+        return dealerCards;
     }
 
+    @Override   //카드 2장을 초기에 뽑음
+    public void firstPick(CardDeck cardDeck){
+        dealerCards.add(cardDeck.pickAndRemove());
+        dealerCards.add(cardDeck.pickAndRemove());
+        total(dealerCards);
+    }
+
+    //카드값(16초과한지 계산)
     @Override
     public void total(List<Card> cards){
-        cards=dealer_cards;
+        cards= dealerCards;
         for(Card card:cards)
             this.dealerTotal+=card.getPoint();
     }
+
+    //포인트가 16이하여서 한번 더 뽑음
     public void pick(CardDeck cardDeck){
-
-        if(this.dealerTotal<17&&!isOverCardSize()) {
-            dealer_cards.add(cardDeck.pickAndRemove());
-            this.dealerTotal+=dealer_cards.get(2).getPoint();
+        if(this.dealerTotal<BOUNDARY_VALUE&&!isOverCardSize()) {
+            dealerCards.add(cardDeck.pickAndRemove());
+            this.dealerTotal+= dealerCards.get(lastCardIndex()).getPoint();
         }
-
     }
+
+    private int lastCardIndex(){
+        return dealerCards.size()-1;
+    }
+
+    //카드 수 초과하였는지 확인
     public boolean isOverCardSize(){
-        if(dealer_cards.size()>=MAX_CARD)
+        if(dealerCards.size()>=MAX_CARD)
             throw new IllegalArgumentException("받을 수 있는 카드 수 초과");
         return false;
     }

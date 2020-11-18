@@ -15,7 +15,7 @@ public class GamerTest {
         List<Card> cards = new ArrayList<>();
         Gamer gamer = new Gamer(cards);
         gamer.firstPick(cardDeck);
-        for(int i=0;i<gamer.gamercards.size();i++) {
+        for(int i=0;i<gamer.gamerCards.size();i++) {
             System.out.println(gamer.openCard().get(i).getPattern());
             System.out.println(gamer.openCard().get(i).getCharacter());
         }

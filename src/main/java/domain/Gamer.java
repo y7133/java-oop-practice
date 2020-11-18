@@ -7,45 +7,36 @@ import java.util.Objects;
 public class Gamer implements Player{
 
 
-    public List<Card> gamercards=new ArrayList<>();
+    public List<Card> gamerCards;
     public int gamerTotal;
 
     public Gamer(List<Card> gamercards) {
-        this.gamercards = gamercards;
+        this.gamerCards = gamercards;
         this.gamerTotal=0;
     }
     @Override
     public List<Card> openCard(){
-        return gamercards;
+        return gamerCards;
     }
     public void firstPick(CardDeck cardDeck){
-        gamercards.add(cardDeck.pickAndRemove());
-        gamercards.add(cardDeck.pickAndRemove());
-        total(gamercards);
+        gamerCards.add(cardDeck.pickAndRemove());
+        gamerCards.add(cardDeck.pickAndRemove());
+        total(gamerCards);
     }
     @Override
     public void total(List<Card> cards){
-        cards=gamercards;
+        cards=gamerCards;
         for(Card card:cards) {
             this.gamerTotal += card.getPoint();
         }
     }
     public void pick(CardDeck cardDeck){
-        gamercards.add(cardDeck.pickAndRemove());
-        this.gamerTotal+=gamercards.get(gamercards.size()-1).getPoint();
+        gamerCards.add(cardDeck.pickAndRemove());
+        this.gamerTotal+=gamerCards.get(lastCardIndex()).getPoint();
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Gamer)) return false;
-        Gamer gamer = (Gamer) o;
-        return Objects.equals(gamercards, gamer.gamercards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(gamercards);
+    private int lastCardIndex(){
+        return gamerCards.size()-1;
     }
 }

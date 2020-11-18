@@ -3,17 +3,16 @@ package domain;
 public class Card {
     private CardShape pattern;
     private String character;
+    private int point;
 
     public int getPoint() {
         return point;
     }
 
-    private int point;
     public Card(CardShape pattern, String character) {
         this.pattern = pattern;
         this.character = character;
         this.point=cardPoint(character);
-
     }
     private int cardPoint(String character){
         if(character.equals("A"))
