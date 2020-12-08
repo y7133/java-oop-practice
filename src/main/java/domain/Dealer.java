@@ -51,18 +51,4 @@ public class Dealer implements Player{
             throw new IllegalArgumentException("받을 수 있는 카드 수 초과");
         return false;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Dealer)) return false;
-//        Dealer dealer = (Dealer) o;
-//        return dealer_cards.equals(dealer.dealer_cards) &&
-//                rule.equals(dealer.rule);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(dealer_cards, rule);
-//    }
 }
