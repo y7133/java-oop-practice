@@ -1,35 +1,34 @@
 package domain;
-
 public class Rule {
-    public int dealerPoint;
-    public int gamerPoint;
-
-    public Rule() {
-        this.dealerPoint = 0;
-        this.gamerPoint = 0;
-    }
-    public void Winner(Dealer dealer,Gamer gamer){
-        dealerPoint=dealer.dealerTotal;
-        gamerPoint=gamer.gamerTotal;
-        for(Card card: dealer.dealerCards)
-            System.out.println(card.getPoint());
-        if(dealerPoint>21)
-            dealerPoint=0;
-        if(gamerPoint>21)
-            gamerPoint=0;
-        if(dealerPoint>gamerPoint)
-            System.out.println("Dealer is winner");
-        else if(dealerPoint==gamerPoint) {
-            System.out.println("Draw");
-        }
-        else {
+    private static final int BOUNDARY_VALUE=17;
+    public void winner(Dealer dealer,Gamer gamer){
+        int dealerPoint=sumOfcard(dealer.openCard());
+        int gamerPoint=sumOfcard(gamer.openCard());
+        System.out.println("dealerPoint: "+dealerPoint);
+        System.out.println("gamerPoint: "+gamerPoint);
+        if(gamerPoint>dealerPoint)
             System.out.println("Gamer is winner");
-        }
-    }
-    private int calcPoint(int point){
-        if(point>21)
-            return -1;
+        else if(gamerPoint==dealerPoint)
+            System.out.println("Draw");
         else
-            return point;
+            System.out.println("Dealer is winner");
+    }
+
+    public int sumOfcard(Cards cardList){
+        int sum=0;
+        for(int i=0;i<cardList.getCards().size();i++)
+            sum+=cardList.getCards().get(i).getPattern().getScore();
+
+        return isOver(sum);
+    }
+    public boolean choosePick(Cards cardList){
+        if(sumOfcard(cardList)<BOUNDARY_VALUE)
+            return true;
+        return false;
+    }
+    private int isOver(int sum){
+        if(sum>21)
+            return -1;
+        else return sum;
     }
 }

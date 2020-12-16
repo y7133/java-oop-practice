@@ -1,10 +1,8 @@
 package domain;
-
 import java.util.List;
 
 public interface Player {
-    public List<Card> openCard();
+    public Cards openCard();
     public void firstPick(CardDeck cardDeck);
-    public void total(List<Card> cards);
-
+    public void addCard(CardDeck cardDeck);
 }

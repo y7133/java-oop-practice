@@ -1,54 +1,40 @@
 package domain;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer implements Player{
 
-    List<Card> dealerCards;
+    Cards dealerCards;
+    List<Card> dealerCardList= new ArrayList<>();
     private static final int MAX_CARD=3;
-    private static final int BOUNDARY_VALUE=17;
-    public int dealerTotal;
 
-    public Dealer(List<Card> dealerCards) {
-        this.dealerCards = dealerCards;
-        this.dealerTotal=0;
+
+    public Dealer() {
+        dealerCards = new Cards(dealerCardList);
+    }
+    public Dealer(Cards dealerCards){
+        this.dealerCards=dealerCards;
     }
     @Override
-    public List<Card> openCard(){
+    public Cards openCard(){
         return dealerCards;
     }
 
-    @Override   //카드 2장을 초기에 뽑음
-    public void firstPick(CardDeck cardDeck){
-        dealerCards.add(cardDeck.pickAndRemove());
-        dealerCards.add(cardDeck.pickAndRemove());
-        total(dealerCards);
-    }
-
-    //카드값(16초과한지 계산)
     @Override
-    public void total(List<Card> cards){
-        cards= dealerCards;
-        for(Card card:cards)
-            this.dealerTotal+=card.getPoint();
+    public void addCard(CardDeck cardDeck){
+        if(dealerCards.getCards().size()<MAX_CARD)
+            dealerCards.toList(cardDeck.pick());
     }
-
-    //포인트가 16이하여서 한번 더 뽑음
-    public void pick(CardDeck cardDeck){
-        if(this.dealerTotal<BOUNDARY_VALUE&&!isOverCardSize()) {
-            dealerCards.add(cardDeck.pickAndRemove());
-            this.dealerTotal+= dealerCards.get(lastCardIndex()).getPoint();
-        }
+    @Override
+    public void firstPick(CardDeck cardDeck){
+        dealerCards.toList(cardDeck.pick());
+        dealerCards.toList(cardDeck.pick());
+        System.out.println("Dealer first Point: "+dealerCards.getCards().get(0).getPattern().getScore());
+        System.out.println("Dealer Second Point: "+dealerCards.getCards().get(1).getPattern().getScore());
     }
-
-    private int lastCardIndex(){
-        return dealerCards.size()-1;
-    }
-
-    //카드 수 초과하였는지 확인
-    public boolean isOverCardSize(){
-        if(dealerCards.size()>=MAX_CARD)
-            throw new IllegalArgumentException("받을 수 있는 카드 수 초과");
-        return false;
+    public void additionalPick(Rule rule,CardDeck cardDeck){
+        if(rule.choosePick(dealerCards))
+            dealerCards.toList(cardDeck.pick());
+        System.out.println("Dealer Additional Point: "+dealerCards.getCards().get(2).getPattern().getScore());
     }
 }

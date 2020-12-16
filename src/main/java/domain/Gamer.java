@@ -1,42 +1,34 @@
 package domain;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Gamer implements Player{
+    Cards gamerCards;
+    List<Card> gamerCardList= new ArrayList<>();
+    private static final int MAX_CARD=3;
+    private static final int BOUNDARY_VALUE=17;
 
-
-    public List<Card> gamerCards;
-    public int gamerTotal;
-
-    public Gamer(List<Card> gamercards) {
-        this.gamerCards = gamercards;
-        this.gamerTotal=0;
+    public Gamer() {
+        gamerCards = new Cards(gamerCardList);
+    }
+    public Gamer(Cards gamerCards){
+        this.gamerCards=gamerCards;
     }
     @Override
-    public List<Card> openCard(){
+    public Cards openCard(){
         return gamerCards;
     }
-    public void firstPick(CardDeck cardDeck){
-        gamerCards.add(cardDeck.pickAndRemove());
-        gamerCards.add(cardDeck.pickAndRemove());
-        total(gamerCards);
+    @Override
+    public void addCard(CardDeck cardDeck){
+        gamerCards.toList(cardDeck.pick());
     }
     @Override
-    public void total(List<Card> cards){
-        cards=gamerCards;
-        for(Card card:cards) {
-            this.gamerTotal += card.getPoint();
-        }
-    }
-    public void pick(CardDeck cardDeck){
-        gamerCards.add(cardDeck.pickAndRemove());
-        this.gamerTotal+=gamerCards.get(lastCardIndex()).getPoint();
-
-    }
-
-    private int lastCardIndex(){
-        return gamerCards.size()-1;
+    public void firstPick(CardDeck cardDeck){
+        gamerCards.toList(cardDeck.pick());
+        gamerCards.toList(cardDeck.pick());
+        System.out.println("Gamer First Point: "+gamerCards.getCards().get(0).getPattern().getScore());
+        System.out.println("Gamer Second Point: "+gamerCards.getCards().get(1).getPattern().getScore());
     }
 }

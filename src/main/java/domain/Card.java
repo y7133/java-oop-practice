@@ -1,43 +1,42 @@
 package domain;
 
+import java.util.Objects;
+
 public class Card {
-    private CardShape pattern;
-    private String character;
-    private int point;
 
-    public int getPoint() {
-        return point;
-    }
+        public Pattern getPattern() {
+            return pattern;
+        }
 
-    public Card(CardShape pattern, String character) {
-        this.pattern = pattern;
-        this.character = character;
-        this.point=cardPoint(character);
-    }
-    private int cardPoint(String character){
-        if(character.equals("A"))
-            return 1;
-        else if(character.equals("K")||character.equals("Q")||character.equals("J"))
-            return 10;
-        else
-            return Integer.parseInt(character);
-    }
+        public CardShape getCardShape() {
+            return cardShape;
+        }
 
-    public void setPattern(CardShape pattern) {
-        this.pattern = pattern;
-    }
+        private CardShape cardShape;
+        private Pattern pattern;
 
-    public void setCharacter(String character) {
-        this.character = character;
-    }
 
-    public CardShape getPattern() {
-        return pattern;
-    }
+        public Card(CardShape cardShape, Pattern pattern) {
+            this.cardShape = cardShape;
+            this.pattern = pattern;
+        }
 
-    public String getCharacter() {
-        return character;
-    }
 
+        public boolean isPatternEquals(Card card){
+            return this.pattern.equals(card.pattern);
+        }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Card card = (Card) o;
+            return cardShape == card.cardShape &&
+                    pattern == card.pattern;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(cardShape, pattern);
+        }
 
 }

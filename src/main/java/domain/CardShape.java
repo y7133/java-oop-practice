@@ -1,17 +1,15 @@
 package domain;
-
 public enum CardShape {
-    SPADE("♠", "SPADE"),
-    HEART("♥", "HEART"),
-    DIAMOND("♦", "DIAMOND"),
-    CLUB("♣", "CLUB");
+    SPADE("SPADE"),
+    HEART( "HEART"),
+    DIAMOND("DIAMOND"),
+    CLUB("CLUB");
 
     private String shape;
-    private String title;
 
-    CardShape(String shape, String title) {
+    CardShape(String shape) {
         this.shape = shape;
-        this.title = title;
+
     }
 
     public String getShape() {
@@ -20,14 +18,6 @@ public enum CardShape {
 
     public void setShape(String shape) {
         this.shape = shape;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
 }
