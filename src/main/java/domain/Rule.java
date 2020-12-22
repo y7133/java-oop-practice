@@ -17,16 +17,20 @@ public class Rule {
     public int sumOfcard(Cards cardList){
         int sum=0;
         for(int i=0;i<cardList.getCards().size();i++)
-            sum+=cardList.getCards().get(i).getPattern().getScore();
+            sum+=haveScore(cardList.getCards().get(i));
 
-        return isOver(sum);
+        return exceededTotal(sum);
+    }
+
+    public int haveScore(Card card){
+        return card.getPattern().getScore();
     }
     public boolean choosePick(Cards cardList){
         if(sumOfcard(cardList)<BOUNDARY_VALUE)
             return true;
         return false;
     }
-    private int isOver(int sum){
+    private int exceededTotal(int sum){
         if(sum>21)
             return -1;
         else return sum;
