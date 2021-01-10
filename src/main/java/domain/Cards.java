@@ -11,9 +11,11 @@ public class Cards {
     public Cards(List<Card> cards) {
         this.cards=cards;
     }
-    public List<Card> toList(Card card){
-        cards.add(card);
-        return cards;
+    public List<Card> toList(){
+        List<Card> cardList=new ArrayList<>();
+        for(int i=0;i< cards.size();i++)
+            cardList.add(cards.get(i));
+        return cardList;
     }
 
     public List<Card> create(){
@@ -24,7 +26,7 @@ public class Cards {
     }
 
     public List<Card> getCards(){
-        return Collections.unmodifiableList(cards);
+        return cards;
     }
     private void createByPattern(List<Card> cards, Pattern pattern){
         for(CardShape cardShape:CardShape.values()){

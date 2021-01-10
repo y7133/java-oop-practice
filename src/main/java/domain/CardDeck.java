@@ -5,28 +5,29 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    List<Card>  cardList = new ArrayList<>();
-    Cards cards;
+    //List<Card>  cardList = new ArrayList<>();
+    private Cards cards;
     //Cards cards;
-    public CardDeck() {
+    public CardDeck(Cards cards) {
+        this.cards = cards;
         cardShuffle();
     }
 
     private void cardShuffle(){
-        cards = new Cards(cardList);
         cards.create();
-        Collections.shuffle(cardList);
+        Collections.shuffle(cards.getCards());
     }
 
 
     public Card pick(){
-        Card card = cardList.get(0);
+        Card card = cards.toList().get(0);
         remove(card);
         return card;
     }
 
     public void remove(Card card){
-        cardList.remove(cardList.get(0));
+
+        cards.getCards().remove(card);
     }
 
 }
